@@ -1,4 +1,3 @@
 .terraform
-.env
 env
 key*
