@@ -10,6 +10,7 @@ Set up a ubuntu dev machine in AWS.
 ```bash
 git clone git@github.com:TheDeveloper/dev-machine.git
 cd dev-machine
+git remote add upstream git@github.com:TheDeveloper/dev-machine.git
 ```
 
 ```bash
@@ -26,6 +27,10 @@ cd dev-machine
 ## Teardown
 ```bash
 ./bin/destroy
+```
+# Update
+```bash
+git pull upstream main
 ```
 # Details
 
