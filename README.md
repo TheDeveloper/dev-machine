@@ -7,11 +7,7 @@ Set up a ubuntu dev machine in AWS.
 
 # Setup
 
-```bash
-git clone git@github.com:TheDeveloper/dev-machine.git
-cd dev-machine
-git remote add upstream git@github.com:TheDeveloper/dev-machine.git
-```
+Fork this repo and clone locally. Then run:
 
 ```bash
 ./bin/setup
