@@ -7,7 +7,6 @@ Set up a ubuntu dev machine in AWS.
 
 # Setup
 
-## Clone
 ```bash
 git clone git@github.com:TheDeveloper/dev-machine.git
 cd dev-machine
