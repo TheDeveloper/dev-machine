@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -e
+
+source env/bin/activate
+source ./.env
+
+rm -rf ./key*
+ssh-keygen -t ed25519 -N '' -f ./key
+
+aws-vault exec $DM_AWS_VAULT_ROLE -- \
+  terraform apply \
+  -auto-approve \
+  -var "instance_type=$DEVMACHINE_INSTANCE_TYPE" \
+  -var "ami=$DEVMACHINE_AMI" \
+  -var "vpc_id=$DEVMACHINE_VPC_ID" \
+  -var "name=$DEVMACHINE_NAME" \
+  -var "subnet=$DEVMACHINE_SUBNET" \
+  -var "kms_key_arn=$DEVMACHINE_KMS_KEY_ARN"
+
+DM_IP=$(terraform output -raw ip)
+DEVMACHINE_HOST="$DM_IP,"
+
+ansible-playbook \
+  --private-key "$(pwd)/key" \
+  -i $DEVMACHINE_HOST \
+  playbooks/ssh.yaml
+
+storm add $DEVMACHINE_NAME ubuntu@$DM_IP --o "ForwardAgent=yes"
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/upgrade.yaml
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/workspace.yaml
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/nvm.yaml
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/packages.yaml
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/terraform.yaml
+
+ansible-playbook \
+  -i "$DEVMACHINE_NAME," \
+  playbooks/aws-vault.yaml
+
+code --new-window --remote ssh-remote+$DEVMACHINE_NAME /home/ubuntu/Development

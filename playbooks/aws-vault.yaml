@@ -1,0 +1,7 @@
+# https://github.com/darkwizard242/ansible-role-awsvault
+---
+- name: aws vault
+  hosts: all
+  become: yes
+  roles:
+    - darkwizard242.awsvault

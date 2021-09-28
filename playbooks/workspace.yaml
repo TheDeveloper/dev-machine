@@ -1,0 +1,17 @@
+---
+- name: workspace
+  hosts: all
+  user: ubuntu
+
+  tasks:
+    - name: create development directory
+      ansible.builtin.file:
+        path: /home/ubuntu/Development
+        state: directory
+        mode: '0755'
+
+    - name: create projects directory
+      ansible.builtin.file:
+        path: /home/ubuntu/Development/projects
+        state: directory
+        mode: '0755'

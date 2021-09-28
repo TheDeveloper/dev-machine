@@ -1,0 +1,10 @@
+---
+- name: packages
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install packages
+      apt:
+        pkg:
+        - unzip

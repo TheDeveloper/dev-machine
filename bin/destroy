@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+source env/bin/activate
+source ./.env
+
+storm delete $DEVMACHINE_NAME
+
+aws-vault exec $DM_AWS_VAULT_ROLE -- \
+  terraform destroy \
+  -auto-approve \
+  -var "instance_type=$DEVMACHINE_INSTANCE_TYPE" \
+  -var "ami=$DEVMACHINE_AMI" \
+  -var "vpc_id=$DEVMACHINE_VPC_ID" \
+  -var "name=$DEVMACHINE_NAME" \
+  -var "subnet=$DEVMACHINE_SUBNET" \
+  -var "kms_key_arn=$DEVMACHINE_KMS_KEY_ARN"
+

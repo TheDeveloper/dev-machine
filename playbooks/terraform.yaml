@@ -1,0 +1,7 @@
+# https://github.com/diodonfrost/ansible-role-terraform
+---
+- name: terraform
+  hosts: all
+  become: yes
+  roles:
+    - role: diodonfrost.terraform

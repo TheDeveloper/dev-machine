@@ -1,0 +1,36 @@
+# https://gist.github.com/komuw/b3b5d24977d4df7bd549#gistcomment-3741919
+---
+- name: nvm
+  hosts: all
+  user: ubuntu
+
+  tasks:
+    - name: setup nvm
+      become: yes
+      become_flags: -i
+      become_user: ubuntu
+      block:
+        - name: install nvm
+          ansible.builtin.shell: >
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          args:
+            executable: /bin/bash
+            chdir: "$HOME"
+            creates: "$HOME/.nvm/nvm.sh"
+
+        - name: add to .bashrc
+          ansible.builtin.lineinfile:
+            path: ~/.bashrc
+            line: source ~/.nvm/nvm.sh
+            create: yes
+
+        - name: install node
+          ansible.builtin.shell: |
+            source ~/.nvm/nvm.sh
+            nvm install {{item}}
+          args:
+            executable: /bin/bash
+            chdir: "$HOME"
+            creates: "$HOME/.nvm/versions/node/v{{item}}"
+          loop:
+            - 14.18.0

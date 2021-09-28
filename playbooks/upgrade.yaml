@@ -1,0 +1,13 @@
+---
+- name: upgrade
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: apt upgrade
+      apt:
+        update_cache: yes
+        name: "*"
+        state: latest
+    - name: reboot
+      reboot:
