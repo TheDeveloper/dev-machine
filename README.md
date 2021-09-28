@@ -7,6 +7,30 @@ Set up a ubuntu dev machine in AWS.
 
 # Setup
 
+## Clone
+```bash
+git clone git@github.com:TheDeveloper/dev-machine.git
+cd dev-machine
+```
+
+## Setup
+```bash
+./bin/setup
+```
+
+# Usage
+
+## Set variables in .env, then:
+```bash
+./bin/create
+```
+
+## Teardown
+```bash
+./bin/destroy
+```
+# Details
+
 ## Install ansible
 ```bash
 python3 -m venv env && \
@@ -25,20 +49,6 @@ cp .env.example .env
 ```bash
 terraform init
 ```
-
-# Usage
-
-## Set variables in .env, then:
-```bash
-./bin/create
-```
-
-## Teardown
-```bash
-./bin/destroy
-```
-
-# Details
 
 ## Generate setup key for ec2 instance
 ```
