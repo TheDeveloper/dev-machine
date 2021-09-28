@@ -5,6 +5,7 @@ set -e
 python3 -m venv env && \
 source env/bin/activate && \
 pip3 install ansible && \
+pip3 install stormssh && \
 ansible-galaxy install diodonfrost.terraform && \
 ansible-galaxy install darkwizard242.awsvault
 
