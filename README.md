@@ -12,7 +12,6 @@ git clone git@github.com:TheDeveloper/dev-machine.git
 cd dev-machine
 ```
 
-## Setup
 ```bash
 ./bin/setup
 ```
